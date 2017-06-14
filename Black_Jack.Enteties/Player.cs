@@ -2,9 +2,11 @@
 {
     public class Player : PlayerBase
     {
-        public Player(string name) : base(name)
+        public Player(int id, string name) : base(name)
         {
-
+            Id = id;
         }
+
+        public int Id { get; set; }
     }
 }

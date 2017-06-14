@@ -11,7 +11,7 @@ namespace Black_Jack.Tests.Controllers
         public void Player_WhenGivenTwoPictures_ShouldReturn20ForHighAndLow()
         {
             // Arrange
-            Player p = new Player("");
+            Player p = new Player(0, "");
             p.AddCardToHand(new Card("Dam", 10));
             p.AddCardToHand(new Card("Kung", 10));
 
@@ -28,7 +28,7 @@ namespace Black_Jack.Tests.Controllers
         public void Player_WhenGivenThreePictures_ShouldReturnIsBustedTrue()
         {
             // Arrange
-            Player p = new Player("");
+            Player p = new Player(0, "");
 
             // Act
             p.AddCardToHand(new Card("", 10));
@@ -36,14 +36,14 @@ namespace Black_Jack.Tests.Controllers
             p.AddCardToHand(new Card("", 10));
 
             // Assert
-            Assert.IsTrue(p.IsBusted());
+            Assert.IsTrue(p.IsBusted);
         }
 
         [TestMethod]
         public void Player_WhenGivenTwoPicturesAndAnAce_ShouldReturnIsBustedFalse()
         {
             // Arrange
-            Player p = new Player("");
+            Player p = new Player(0, "");
 
             // Act
             p.AddCardToHand(new Card("Ace", 11));
@@ -51,7 +51,7 @@ namespace Black_Jack.Tests.Controllers
             p.AddCardToHand(new Card("", 10));
 
             // Assert
-            Assert.IsFalse(p.IsBusted());
+            Assert.IsFalse(p.IsBusted);
         }
 
         [TestMethod]

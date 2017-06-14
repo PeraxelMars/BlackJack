@@ -1,0 +1,64 @@
+﻿@using Black_Jack.Enteties
+
+@model Black_Jack.ViewModels.GameViewModel
+
+@{
+    ViewBag.Title = "The Game";
+}
+
+
+<div class="row">
+    <div id="@Model.Dealer.Name">
+        <table>
+            <tr>
+                <td>Cards:</td>
+            </tr>
+
+            @foreach (var card in Model.Dealer.Hand)
+            {
+                <tr>
+                    <td>&nbsp;&nbsp;@card.Name</td>
+                </tr>
+            }
+            <tr>
+                <td>
+                    Card values (low): @Model.Dealer.CardValueLow
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Card values (high): @Model.Dealer.CardValueHigh
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Must stop: @Model.Dealer.MustStop
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Must take card: @Model.Dealer.MustTakeCard
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Is busted: @Model.Dealer.IsBusted
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Dealer.MustTakeCard)
+                    {
+                        <button class="btn btn-default" type="button">New Card</button>
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+@section scripts
+{
+
+}

@@ -1,0 +1,52 @@
+﻿@model Black_Jack.ViewModels.PlayerViewModel
+
+<div>
+    <h4>PlayerViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsBusted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsBusted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HasBlackJack)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HasBlackJack)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardValueHigh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardValueHigh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardValueLow)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardValueLow)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -41,10 +41,7 @@ namespace Black_Jack.Enteties
             return value;
         }
 
-        public bool IsBusted()
-        {
-            return GetCardValuesLow() > Constants.BLACK_JACK;
-        }
+        public bool IsBusted => GetCardValuesLow() > Constants.BLACK_JACK;
 
         public bool HasBlackJack()
         {

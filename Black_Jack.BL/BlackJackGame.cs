@@ -15,7 +15,7 @@ namespace Black_Jack.BL
         {
             _deck = new Deck();
             _deck.Shuffle();
-            Players = Enumerable.Range(0, numberOfPlayers).Select(i => new Player($"Player {i+1}")).ToList();
+            Players = Enumerable.Range(0, numberOfPlayers).Select(i => new Player(i, $"Player {i+1}")).ToList();
             Dealer = new Dealer();
 
             _currentPlayer = 0;

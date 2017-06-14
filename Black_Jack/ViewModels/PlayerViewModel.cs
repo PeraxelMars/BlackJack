@@ -5,15 +5,28 @@ namespace Black_Jack.ViewModels
 {
     public class PlayerViewModel
     {
-        public string Name { get; set; }
+        public PlayerViewModel(Player player)
+        {
+            Id = player.Id;
+            Name = player.Name;
+            Hand = player.Hand;
+            CardValueLow = player.GetCardValuesLow();
+            CardValueHigh = player.GetCardValuesHigh();
+            IsBusted = player.IsBusted;
+            HasBlackJack = player.HasBlackJack();
+        }
 
-        public IEnumerable<Card> Hand { get; set; }
-        public bool IsBusted { get; set; }
+        public int Id { get; }
+        public string Name { get; }
 
-        public bool HasBlackJack { get; set; }
+        public IEnumerable<Card> Hand { get; }
+        public bool IsBusted { get; }
 
-        public int CardValueHigh { get; set; }
+        public bool HasBlackJack { get; }
+
+        public int CardValueHigh { get; }
 
         public int CardValueLow { get; set; }
+
     }
 }

@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using Black_Jack.BL;
 using Black_Jack.Enteties;
 using Black_Jack.ViewModels;
@@ -12,37 +15,38 @@ namespace Black_Jack.Controllers
             return View();
         }
 
-        public ActionResult InitGame(int players)
+        [HttpPost]
+        public ActionResult TheGame(InitGameViewModel model)
         {
-            if (HttpContext.Cache["BlackJack"] == null)
+            if (!ModelState.IsValid)
             {
-                BlackJackGame theGame = new BlackJackGame(players);
-                theGame.StartNewRound();
-
-                HttpContext.Cache["BlackJack"] = theGame;
+                return RedirectToAction(nameof(Index));
             }
 
-            return View();
+            BlackJackGame theGame = new BlackJackGame(model.NumberOfPlayers);
+            theGame.StartNewRound();
+
+            HttpContext.Cache["BlackJack"] = theGame;
+
+            GameViewModel vm = new GameViewModel(
+                                        new DealerViewModel(theGame.Dealer),
+                                        theGame.Players.Select(p => new PlayerViewModel(p)));
+
+            return View(vm);
         }
 
         [HttpGet]
-        public ActionResult DealCardPlayer(int playerIndex)
+        public ActionResult DealCardPlayer(int id)
         {
+            
             BlackJackGame theGame = (BlackJackGame)HttpContext.Cache["BlackJack"];
-            Player player = theGame.Players[playerIndex];
+            Player player = theGame.Players[id];
             theGame.DealCard(player);
 
-            PlayerViewModel vm = new PlayerViewModel()
-            {
-                Name = player.Name,
-                Hand = player.Hand,
-                CardValueLow = player.GetCardValuesLow(),
-                CardValueHigh = player.GetCardValuesHigh(),
-                IsBusted = player.IsBusted(),
-                HasBlackJack = player.HasBlackJack()
-            };
-            
-            return PartialView("PlayerPartial");
+
+            PlayerViewModel vm = new PlayerViewModel(player);
+
+            return PartialView("_Player");
         }
 
         [HttpGet]
@@ -52,17 +56,7 @@ namespace Black_Jack.Controllers
             Dealer dealer = theGame.Dealer;
             theGame.DealCard(dealer);
 
-            DealerViewModel vm = new DealerViewModel()
-            {
-                Name = dealer.Name,
-                Hand = dealer.Hand,
-                CardValueLow = dealer.GetCardValuesLow(),
-                CardValueHigh = dealer.GetCardValuesHigh(),
-                IsBusted = dealer.IsBusted(),
-                HasBlackJack = dealer.HasBlackJack(),
-                MustStop = dealer.MustStop,
-                MustTakeCard = dealer.MustTakeCard
-            };
+            DealerViewModel vm = new DealerViewModel(dealer);
 
             return PartialView("PlayerPartial");
         }
