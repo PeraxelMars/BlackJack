@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Black_Jack.Enteties.Enums;
 
 namespace Black_Jack.Enteties
@@ -18,7 +16,12 @@ namespace Black_Jack.Enteties
                 for (int i = 2; i < 15; i++)
                 {
                     var cardValue = i > 10 ? (i == 14 ? 11 : 10) : i;
-                    _deck.Add(new Card($"{suit.DisplayName()} {i}", cardValue));
+                    var name = i > 10 ?
+                                i == 11 ? "Knekt" :
+                                    i == 12 ? "Dam" :
+                                        i == 13 ? "Kung" : "Äss"
+                               : i.ToString();
+                    _deck.Add(new Card($"{suit.DisplayName()} {name}", cardValue));
                 }
             }
         }
