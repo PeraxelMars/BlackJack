@@ -1,0 +1,79 @@
+﻿@using Black_Jack.Controllers
+@model Black_Jack.ViewModels.DealerViewModel
+
+<div class="card">
+    <table class="table">
+        <tr>
+            <th>Cards</th>
+        </tr>
+        <tr>
+            <td>
+                @foreach (var card in Model.Hand)
+            {
+                    <div>
+                        &nbsp;&nbsp;@card.Name
+                    </div>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Card values:
+                @{
+                    if (Model.CardValueLow == Model.CardValueHigh)
+                    {
+                        <span>@Model.CardValueLow</span>
+                    }
+                    else
+                    {
+                        <span>@($"{Model.CardValueLow} / {Model.CardValueHigh}")</span>
+                    }
+                }
+            </td>
+        </tr>
+        @*<tr>
+            <td>
+                Must stop: @Model.MustStop
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Must take card: @Model.MustTakeCard
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Is busted: @Model.IsBusted
+            </td>
+        </tr>*@
+        <tr>
+            <td>
+                @{
+                    if (Model.IsBusted)
+                    {
+                        <hr />
+                        <h2>Busted!</h2>
+                        if (!Model.HasFinishedGame)
+                        {
+                            @Html.ActionLink("Finish Game", nameof(HomeController.FinishGame), null, new {@class = "btn btn-default"})
+                        }
+                    }
+                    else if (!Model.HasFinishedGame)
+                    {
+
+                        if (Model.MustTakeCard)
+                        {
+                            <hr />
+                            <button class="btn btn-default" type="button" id="btnDealerCard">Kort!</button>
+                        }
+                        else
+                        {
+                            <hr />
+                            @Html.ActionLink("Finish Game", nameof(HomeController.FinishGame), null, new { @class = "btn btn-default" })
+                        }
+                    }
+                }
+            </td>
+        </tr>
+    </table>
+</div>

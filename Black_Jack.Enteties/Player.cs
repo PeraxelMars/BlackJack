@@ -1,4 +1,6 @@
-﻿namespace Black_Jack.Enteties
+﻿using Black_Jack.Enteties.Enums;
+
+namespace Black_Jack.Enteties
 {
     public class Player : PlayerBase
     {
@@ -8,5 +10,7 @@
         }
 
         public int Id { get; set; }
+
+        public PlayerGameStatus GameStatus { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Black_Jack.BL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Black_Jack.Enteties;
+using Black_Jack.Enteties.Enums;
 
 namespace Black_Jack.Tests.Controllers
 {
@@ -81,6 +82,67 @@ namespace Black_Jack.Tests.Controllers
             // Assert
             Assert.AreEqual(expected, theGame.Players.Count);
             Assert.IsNotNull(theGame.Dealer);
+        }
+
+        [TestMethod]
+        public void BlackJackGame_WhenDealerAndPlayerHas19Points_ShouldSetPlayerAsLooser()
+        {
+            // Arrange
+            BlackJackGame theGame = new BlackJackGame(1);
+            var expected = PlayerGameStatus.Looser;
+
+            // Act
+            theGame.Dealer.AddCardToHand(new Card("Kung", 10));
+            theGame.Dealer.AddCardToHand(new Card("9", 9));
+
+            theGame.Players[0].AddCardToHand(new Card("Kung", 10));
+            theGame.Players[0].AddCardToHand(new Card("9", 9));
+
+            theGame.FinishGame();
+
+            // Assert
+            Assert.AreEqual(expected, theGame.Players[0].GameStatus);
+        }
+
+        [TestMethod]
+        public void BlackJackGame_WhenDealerAndPlayerHas20Points_ShouldSetPlayerGameStatusToTie()
+        {
+            // Arrange
+            BlackJackGame theGame = new BlackJackGame(1);
+            var expected = PlayerGameStatus.Tie;
+
+            // Act
+            theGame.Dealer.AddCardToHand(new Card("Kung", 10));
+            theGame.Dealer.AddCardToHand(new Card("Kung", 10));
+
+            theGame.Players[0].AddCardToHand(new Card("Kung", 10));
+            theGame.Players[0].AddCardToHand(new Card("Kung", 10));
+
+            theGame.FinishGame();
+
+            // Assert
+            Assert.AreEqual(expected, theGame.Players[0].GameStatus);
+        }
+
+        [TestMethod]
+        public void BlackJackGame_WhenPlayerHasBJAndDealerHas21_ShouldSetPlayerGameStatusToWinner()
+        {
+            // Arrange
+            BlackJackGame theGame = new BlackJackGame(1);
+            var expected = PlayerGameStatus.Winner;
+
+            // Act
+            theGame.Dealer.AddCardToHand(new Card("Kung", 10));
+            theGame.Dealer.AddCardToHand(new Card("7", 7));
+            theGame.Dealer.AddCardToHand(new Card("4", 4));
+
+            theGame.Players[0].AddCardToHand(new Card("Kung", 10));
+            theGame.Players[0].AddCardToHand(new Card("Äss", 11));
+
+            theGame.FinishGame();
+
+            // Assert
+            Assert.AreEqual(expected, theGame.Players[0].GameStatus);
         }
 
         [TestMethod]

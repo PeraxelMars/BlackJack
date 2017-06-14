@@ -1,4 +1,5 @@
-﻿@using Black_Jack.Enteties
+﻿@using Black_Jack.Controllers
+@using Black_Jack.Enteties
 
 @model Black_Jack.ViewModels.GameViewModel
 
@@ -6,59 +7,72 @@
     ViewBag.Title = "The Game";
 }
 
-
-<div class="row">
-    <div id="@Model.Dealer.Name">
-        <table>
-            <tr>
-                <td>Cards:</td>
-            </tr>
-
-            @foreach (var card in Model.Dealer.Hand)
-            {
-                <tr>
-                    <td>&nbsp;&nbsp;@card.Name</td>
-                </tr>
-            }
-            <tr>
-                <td>
-                    Card values (low): @Model.Dealer.CardValueLow
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Card values (high): @Model.Dealer.CardValueHigh
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Must stop: @Model.Dealer.MustStop
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Must take card: @Model.Dealer.MustTakeCard
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Is busted: @Model.Dealer.IsBusted
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @if (Model.Dealer.MustTakeCard)
-                    {
-                        <button class="btn btn-default" type="button">New Card</button>
-                    }
-                </td>
-            </tr>
-        </table>
+<div class="container">
+    <div class="row">
+        <h3>The Dealer</h3>
+        <div class="col-sm-3" id="@Model.Dealer.Name">
+            @Html.Partial("_Dealer", Model.Dealer)
+        </div>
     </div>
-
 </div>
-
+<div class="container">
+    <div class="row">
+        <h3>The Players</h3>
+        @foreach (var player in Model.Players)
+        {
+            <div class="col-sm-3" id="@("Player" + player.Id)">
+                @Html.Partial("_Player", player)
+            </div>
+        }
+    </div>
+</div>
 @section scripts
 {
+    <script>
+        var BlackJack = function () {
+            $(document).on("click", "#btnDealerCard", function () {
+                var url = "@Url.RouteUrl(new { Controller = nameof(HomeController).Replace("Controller", ""), Action = nameof(HomeController.DealCardDealer) })";
 
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    dataType: "html",
+                    success: function(data) {
+                        $("#Dealer").html(data);
+                    }
+                });
+            });
+            
+            $(document).on("click", "#btnPlayerCard", function () {
+                var playerId = $(this).attr("data-player-id");
+                var url = "@Url.RouteUrl(new { Controller = nameof(HomeController).Replace("Controller", ""), Action = nameof(HomeController.DealCardPlayer) })";
+
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    data:{id: playerId},
+                    dataType: "html",
+                    success: function(data) {
+                        $("#Player" + playerId).html(data);
+                    }
+                });
+            });
+
+            $(document).on("click", "#btnPlayerStop", function () {
+                var playerId = $(this).attr("data-player-id");
+                var url = "@Url.RouteUrl(new { Controller = nameof(HomeController).Replace("Controller", ""), Action = nameof(HomeController.PlayerStop) })";
+
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    data:{id: playerId},
+                    dataType: "html",
+                    success: function(data) {
+                        $("#Player" + playerId).html(data);
+                    }
+                });
+            });
+
+        }();
+    </script>
 }

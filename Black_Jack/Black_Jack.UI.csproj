@@ -188,6 +188,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\_Player.cshtml" />
     <Content Include="Views\Home\TheGame.cshtml" />
+    <Content Include="Views\Home\_Dealer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

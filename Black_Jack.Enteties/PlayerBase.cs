@@ -8,6 +8,7 @@ namespace Black_Jack.Enteties
         {
             Name = name;
         }
+
         private readonly IList<Card> _hand = new List<Card>();
 
         public string Name { get; }
@@ -41,11 +42,15 @@ namespace Black_Jack.Enteties
             return value;
         }
 
+        public int GetFinalCardValues()
+        {
+            var finalValue = GetCardValuesHigh();
+
+            return finalValue > Constants.BLACK_JACK ? GetCardValuesLow() : finalValue;
+        }
+
         public bool IsBusted => GetCardValuesLow() > Constants.BLACK_JACK;
 
-        public bool HasBlackJack()
-        {
-            return _hand.Count == 2 && GetCardValuesHigh() == Constants.BLACK_JACK;
-        }
+        public bool HasBlackJack => _hand.Count == 2 && GetCardValuesHigh() == Constants.BLACK_JACK;
     }
 }

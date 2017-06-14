@@ -10,7 +10,7 @@
     <h1>Black Jack</h1>
 </div>
 
-@using (Html.BeginForm(actionName: nameof(HomeController.TheGame), controllerName:"Home"))
+@using (Html.BeginForm(actionName: nameof(HomeController.InitGame), controllerName:"Home"))
 {
     @Html.AntiForgeryToken()
 

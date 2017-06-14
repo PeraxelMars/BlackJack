@@ -1,52 +1,67 @@
-﻿@model Black_Jack.ViewModels.PlayerViewModel
+﻿@using Black_Jack.Enteties.Enums
+@model Black_Jack.ViewModels.PlayerViewModel
 
-<div>
-    <h4>PlayerViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsBusted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsBusted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HasBlackJack)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HasBlackJack)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CardValueHigh)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CardValueHigh)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CardValueLow)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CardValueLow)
-        </dd>
-
-    </dl>
+<div class="card">
+    <table class="table">
+        <tr>
+            <th>@Model.Name</th>
+        </tr>
+        <tr>
+            <td>Cards</td>
+        </tr>
+        <tr>
+            <td>
+                @foreach (var card in Model.Hand)
+            {
+                    <div>
+                        &nbsp;&nbsp;@card.Name
+                    </div>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Card values:
+                @{
+                    if (Model.CardValueLow == Model.CardValueHigh)
+                    {
+                        <span>@Model.CardValueLow</span>
+                    }
+                    else
+                    {
+                        <span>@($"{Model.CardValueLow} / {Model.CardValueHigh}")</span>
+                    }
+                }
+            </td>
+        </tr>
+        @*<tr>
+            <td>
+                Is busted: @Model.IsBusted
+            </td>
+        </tr>*@
+        <tr>
+            <td>
+                <hr />
+                @{
+                    if (Model.GameStatus != PlayerGameStatus.None)
+                    {
+                        <h2>@Model.GameStatus.DisplayName()</h2>
+                    }
+                    else if (!Model.IsBusted && !Model.HasStopped && !Model.HasBlackJack)
+                    {
+                        <button class="btn btn-default" type="button" id="btnPlayerCard" data-player-id="@Model.Id">Kort!</button>
+                        <button class="btn btn-default" type="button" id="btnPlayerStop" data-player-id="@Model.Id">Stopp</button>
+                    }
+                    else if (Model.HasBlackJack)
+                    {
+                        <h2>Black Jack!</h2>
+                    }
+                    else if (Model.IsBusted)
+                    {
+                        <h2>Busted!</h2>
+                    }
+                }
+            </td>
+        </tr>
+    </table>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

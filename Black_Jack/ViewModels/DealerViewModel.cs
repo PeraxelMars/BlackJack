@@ -17,7 +17,8 @@ namespace Black_Jack.ViewModels
             IsBusted = dealer.IsBusted;
             MustStop = dealer.MustStop;
             MustTakeCard = dealer.MustTakeCard;
-            HasBlackJack = dealer.HasBlackJack();
+            HasBlackJack = dealer.HasBlackJack;
+            HasFinishedGame = dealer.HasFinishedGame;
         }
         public string Name { get; set; }
 
@@ -33,6 +34,8 @@ namespace Black_Jack.ViewModels
         public int CardValueHigh { get; set; }
 
         public int CardValueLow { get; set; }
+
+        public bool HasFinishedGame { get; set; }
 
     }
 }

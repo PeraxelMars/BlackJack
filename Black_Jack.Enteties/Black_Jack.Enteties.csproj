@@ -47,6 +47,7 @@
     <Compile Include="Deck.cs" />
     <Compile Include="Enums\CardSuit.cs" />
     <Compile Include="Enums\EnumHelpers.cs" />
+    <Compile Include="Enums\PlayerGameStatus.cs" />
     <Compile Include="PlayerBase.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
